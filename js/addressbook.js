@@ -74,7 +74,7 @@ function ajaxCall(dataUrl, outputElement, callback) {
 	/* use our function to get the correct Ajax object based on support */
 	var request = getHttpObject();
 	
-	outputElement.innerHTML = "Loading...";
+	$('#output').innerHTML = "Loading...";
 	
 	request.onreadystatechange = function() {
 		
@@ -103,7 +103,6 @@ function ajaxCall(dataUrl, outputElement, callback) {
 	
 }
 
-*/
 
 /* wrap everything in an anonymous function to contain the variables this executes the address book*/
 
