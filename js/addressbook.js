@@ -2,28 +2,32 @@
 
 $(document).ready(function () {
     
-    $.ajax({
-        type: 'GET', // set request type to GET or POST
-        url: 'data/contacts.json', // the data url
-        datatype: 'json', // type: xml, json, script, or html
-        success: function(data) {
+    // start Ajax call
+    $.getJSON('data/contacts.json', function (data) {
+        
+        var addrBook = data.addressBook,
+            count = addrBook.length;
+        
+        // clear the target area just in case there is something in it
+        $('#output').empty();
+        
+        // check the count, of course
+        if (count > 0) {
             
-            // if the call is a success do this
-            console.log(data.addressBook);
+            // loop through the contacts
+            $.each(addrBook, function (i, obj) {
+                
+                $('#output').append('<p>' + obj.name + ', <a href="mailto:' + obj.email + '">'+ obj.email +'</a></p>');
             
-        },
-        error: function () {
+            }); //end each
             
-            // if the call fails do this
-            alert('an ajax error occurred');
-            
-        }
-    }); //end Ajax call
+        } //end count check
+        
+    }); // end Ajax call
     
 }); // close document.ready
 
-
-/* standard Ajax xhr function 
+/* standard Ajax xhr function */
 
 function getHttpObject() {
 	
@@ -46,11 +50,11 @@ function getHttpObject() {
 }
 
 
-/* define the Ajax call 
+/* define the Ajax call */
 
-function ajaxCall(dataUrl, outputElement,callback) {
+function ajaxCall(dataUrl, outputElement, callback) {
 
-	/* use our function to get the correct Ajax object based on support 
+	/* use our function to get the correct Ajax object based on support */
 	var request = getHttpObject();
 	
 	outputElement.innerHTML = "Loading...";
@@ -74,10 +78,10 @@ function ajaxCall(dataUrl, outputElement,callback) {
 		
 	} // end onreadystatechange
 	
-	/* Get all the information ready to go 
+	/* Get all the information ready to go */
 	request.open("GET", dataUrl, true);
     
-	/* make the actual call 
+	/* make the actual call */
 	request.send(null);
 	
 }
