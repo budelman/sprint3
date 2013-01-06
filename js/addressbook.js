@@ -1,4 +1,29 @@
-/* standard Ajax xhr function */
+/* Basic Ajax call with jQuery */
+
+$(document).ready(function () {
+    
+    $.ajax({
+        type: 'GET', // set request type to GET or POST
+        url: 'data/contacts.json', // the data url
+        datatype: 'json', // type: xml, json, script, or html
+        success: function(data) {
+            
+            // if the call is a success do this
+            console.log(data.addressBook);
+            
+        },
+        error: function () {
+            
+            // if the call fails do this
+            alert('an ajax error occurred');
+            
+        }
+    }); //end Ajax call
+    
+}); // close document.ready
+
+
+/* standard Ajax xhr function 
 
 function getHttpObject() {
 	
@@ -21,11 +46,11 @@ function getHttpObject() {
 }
 
 
-/* define the Ajax call */
+/* define the Ajax call 
 
 function ajaxCall(dataUrl, outputElement,callback) {
 
-	/* use our function to get the correct Ajax object based on support */
+	/* use our function to get the correct Ajax object based on support 
 	var request = getHttpObject();
 	
 	outputElement.innerHTML = "Loading...";
@@ -49,13 +74,15 @@ function ajaxCall(dataUrl, outputElement,callback) {
 		
 	} // end onreadystatechange
 	
-	/* Get all the information ready to go */
+	/* Get all the information ready to go 
 	request.open("GET", dataUrl, true);
     
-	/* make the actual call */
+	/* make the actual call 
 	request.send(null);
 	
 }
+
+*/
 
 /* wrap everything in an anonymous function to contain the variables this executes the address book*/
 
