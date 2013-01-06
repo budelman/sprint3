@@ -22,6 +22,7 @@ function getHttpObject() {
 
 
 /* define the Ajax call */
+
 function ajaxCall(dataUrl, outputElement,callback) {
 
 	/* use our function to get the correct Ajax object based on support */
@@ -50,12 +51,13 @@ function ajaxCall(dataUrl, outputElement,callback) {
 	
 	/* Get all the information ready to go */
 	request.open("GET", dataUrl, true);
+    
 	/* make the actual call */
 	request.send(null);
 	
 }
 
-/* wrap everything in an anonymous function to contain the variables */
+/* wrap everything in an anonymous function to contain the variables this executes the address book*/
 
 (function() {
 	
