@@ -17,15 +17,32 @@ $(document).ready(function () {
             // loop through the contacts
             $.each(addrBook, function (i, obj) {
                 
-                $('#output').append('<p>' + obj.name + ', <a href="mailto:' + obj.email + '">'+ obj.email +'</a></p>');
+                $('#output').append('<p>' + obj.name + ', <a href="mailto:' + obj.email + '">'+ obj.email +'</a></p>').hide().fadeIn();
             
             }); //end each
             
         } //end count check
         
+    }).error(function () {
+        
+        // if there was an error during the ajax call
+        alert('there was an ajax error');
+        
+    }).complete(function () {
+        
+        // if the Ajax call completed (whether it was successful or not)
+        alert('your ajax call was completed');
+        
+    }).success(function () {
+        
+        // if the Ajax call was a success
+        alert('your ajax call was a success');
+        
     }); // end Ajax call
     
 }); // close document.ready
+
+/* ----------- END jQuery -----------------*/
 
 /* standard Ajax xhr function */
 
@@ -93,10 +110,10 @@ function ajaxCall(dataUrl, outputElement, callback) {
 (function() {
 	
 	/* define the DOM elements and common variables you'll need */
-    var searchForm = document.getElementById("search-form"),
-        searchField = document.getElementById("q"),
-        getAllButton = document.getElementById("get-all"),
-        target = document.getElementById("output");
+    var searchForm = $("#search-form"),
+        searchField = $("#q"),
+        getAllButton = $("#get-all"),
+        target = $("#output");
     
     /* define address book methods */
     var addr = {
@@ -104,7 +121,7 @@ function ajaxCall(dataUrl, outputElement, callback) {
         search : function(event){
             
 			/* set the output element */
-			var output = document.getElementById("output");
+			var output = $("#output");
 			
 			/* start the Ajax call */
 			ajaxCall("data/contacts.json", output, function (data) {
@@ -146,7 +163,7 @@ function ajaxCall(dataUrl, outputElement, callback) {
         getAllContacts : function (){
 			
 			/* set the output element */
-			var output = document.getElementById("output");
+			var output = $("#output");
 			
 			/* start the Ajax call */
             ajaxCall("data/contacts.json", output, function (data) {
