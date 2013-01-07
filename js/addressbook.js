@@ -30,33 +30,8 @@ $(document).ready(function () {
         
     }).success(function () {
         
-        // if the Ajax call was a success
-        $('#output').innerHTML = "Loading...";
-	
-        request.onreadystatechange = function() {
-            
-            // check to see if the Ajax call went through
-            if( request.readyState === 4 && request.status === 200 ) {
-                
-                // save the Ajax call to a function
-                var contacts = JSON.parse(request.responseText);
-                
-                // make sure the callback is indeed a function before executing it
-                if(typeof callback === "function"){
-                    
-                    callback(contacts);
-                    
-                } // end function check
-                
-            } // end ajax status check
-            
-        } // end onreadystatechange
-        
-        /* Get all the information ready to go */
-        request.open("GET", dataUrl, true);
-        
-        /* make the actual call */
-        request.send(null);
+        // if there was an error during the ajax call
+        alert('Loading...');
         
     }); // end Ajax call
     
