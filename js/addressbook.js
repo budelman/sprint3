@@ -1,4 +1,4 @@
-/* Basic Ajax call with jQuery */
+/* Basic Ajax call with jQuery 
 
 $(document).ready(function () {
     
@@ -62,11 +62,11 @@ function getHttpObject() {
 }
 
 
-/* define the Ajax call */
+/* define the Ajax call 
 
 function ajaxCall(dataUrl, outputElement, callback) {
 
-	/* use our function to get the correct Ajax object based on support */
+	// use our function to get the correct Ajax object based on support 
 	var request = getHttpObject();
 	
 	$('#output').innerHTML = "Loading...";
@@ -90,14 +90,13 @@ function ajaxCall(dataUrl, outputElement, callback) {
 		
 	} // end onreadystatechange
 	
-	/* Get all the information ready to go */
+	// Get all the information ready to go 
 	request.open("GET", dataUrl, true);
     
-	/* make the actual call */
+	// make the actual call 
 	request.send(null);
 	
 }
-
 
 /* wrap everything in an anonymous function to contain the variables. This executes the address book*/
 
