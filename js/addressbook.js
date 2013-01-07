@@ -28,15 +28,35 @@ $(document).ready(function () {
         // if there was an error during the ajax call
         alert('there was an ajax error');
         
-    }).complete(function () {
-        
-        // if the Ajax call completed (whether it was successful or not)
-        alert('your ajax call was completed');
-        
     }).success(function () {
         
         // if the Ajax call was a success
-        alert('your ajax call was a success');
+        $('#output').innerHTML = "Loading...";
+	
+        request.onreadystatechange = function() {
+            
+            // check to see if the Ajax call went through
+            if( request.readyState === 4 && request.status === 200 ) {
+                
+                // save the Ajax call to a function
+                var contacts = JSON.parse(request.responseText);
+                
+                // make sure the callback is indeed a function before executing it
+                if(typeof callback === "function"){
+                    
+                    callback(contacts);
+                    
+                } // end function check
+                
+            } // end ajax status check
+            
+        } // end onreadystatechange
+        
+        /* Get all the information ready to go */
+        request.open("GET", dataUrl, true);
+        
+        /* make the actual call */
+        request.send(null);
         
     }); // end Ajax call
     
@@ -44,7 +64,7 @@ $(document).ready(function () {
 
 /* ----------- END jQuery -----------------*/
 
-/* standard Ajax xhr function */
+/* standard Ajax xhr function 
 
 function getHttpObject() {
 	
@@ -104,7 +124,7 @@ function ajaxCall(dataUrl, outputElement, callback) {
 }
 
 
-/* wrap everything in an anonymous function to contain the variables this executes the address book*/
+/* wrap everything in an anonymous function to contain the variables. This executes the address book*/
 
 (function() {
 	
@@ -119,77 +139,79 @@ function ajaxCall(dataUrl, outputElement, callback) {
         
         search : function(event){
             
-			/* set the output element */
-			var output = $("#output");
-			
-			/* start the Ajax call */
-			ajaxCall("data/contacts.json", output, function (data) {
-				
-			// save the input value, contacts length and i to variables
-            var searchValue = searchField.value,
-                addrBook = data.addressBook,
-				count = addrBook.length,
-				i;
-            
             // stop the default behavior
             event.preventDefault();
             
-            // clear the target area just incase there's something in it.
-            target.innerHTML = "";
-            
-            // check the count, of course
-            if(count > 0 && searchValue !== ""){
-            
-                // loop through the contacts
-                for(i = 0; i < count; i = i + 1) {
-
-                    // look through the name value to see if it contains the searchterm string
-                    var obj = addrBook[i],
-                        isItFound = obj.name.indexOf(searchValue);
-
-                    // anything other than -1 means we found a match
-                    if(isItFound !== -1) {
-                        target.innerHTML += '<p>' + obj.name + ', <a href="mailto:' + obj.email + '">'+ obj.email +'</a><p>';
-                    } // end if
-
-                } // end for loop
-
-            } // end count check
-			
-		}); // end Ajax call
-		
-        },
-        getAllContacts : function (){
-			
 			/* set the output element */
 			var output = $("#output");
 			
 			/* start the Ajax call */
-            ajaxCall("data/contacts.json", output, function (data) {
-            
-            var addrBook = data.addressBook,
-				count = addrBook.length,
-				i;
-            
-            // clear the target area just incase there's something in it.
-            target.innerHTML = "";
-            
-            // check the count, of course
-            if(count > 0){
-            
-                // loop through the contacts
-                for(i = 0; i < count; i = i + 1) {
-                
-                    // look through the name value to see if it contains the searchterm string
-                    var obj = addrBook[i];
-                    
-                    target.innerHTML += '<p>' + obj.name + ', <a href="mailto:' + obj.email + '">'+ obj.email +'</a><p>';
-                    
-                } // end for loop
+            $.getJSON('data/contacts.json', function (data) {
 				
-            } // end count check
-			
-		}); // end Ajax call
+                // save the input value, contacts length and i to variables
+                var searchValue = searchField.value,
+                    addrBook = data.addressBook,
+                    count = addrBook.length,
+                    i;
+                
+                // clear the target area just incase there's something in it.
+                $('#output').empty();
+                
+                // check the count, of course
+                if(count > 0 && searchValue !== ""){
+                
+                    // loop through the contacts
+                    $.each(addrBook, function (i, obj) {
+                    
+                        // look through the name value to see if it contains the searchterm string
+                        var obj = addrBook[i],
+                            isItFound = obj.name.indexOf(searchValue);
+    
+                        // anything other than -1 means we found a match
+                        if(isItFound !== -1) {
+                            
+                            $('#output').append('<p>' + obj.name + ', <a href="mailto:' + obj.email + '">'+ obj.email +'</a></p>').hide().fadeIn();
+                            
+                        } // end if
+    
+                    }); // end .each loop
+    
+                } // end count check
+                
+            }); // end Ajax call
+            
+        },
+        getAllContacts : function (){
+                
+                /* set the output element */
+                var output = $("#output");
+                
+                /* start the Ajax call */
+                $.getJSON('data/contacts.json', function (data) {
+                
+                var addrBook = data.addressBook,
+                    count = addrBook.length,
+                    i;
+                
+                // clear the target area just incase there's something in it.
+                target.innerHTML = "";
+                
+                // check the count, of course
+                if(count > 0){
+                
+                    // loop through the contacts
+                    for(i = 0; i < count; i = i + 1) {
+                    
+                        // look through the name value to see if it contains the searchterm string
+                        var obj = addrBook[i];
+                        
+                        target.innerHTML += '<p>' + obj.name + ', <a href="mailto:' + obj.email + '">'+ obj.email +'</a><p>';
+                        
+                    } // end for loop
+                    
+                } // end count check
+                
+            }); // end Ajax call
 		
         },
         setActiveSection : function(){
@@ -220,7 +242,9 @@ function ajaxCall(dataUrl, outputElement, callback) {
     } // end addr object
     
     // activate auto complete on keyUp
-    searchField.addEventListener("keyup", addr.search, false);
+    $('#q').keyup(function(event) {
+		addr.search(event);
+	});
     
     // set active section on focus of the form field
     searchField.addEventListener("focus", addr.setActiveSection, false);
