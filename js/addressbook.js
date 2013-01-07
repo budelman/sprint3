@@ -221,7 +221,10 @@ function ajaxCall(dataUrl, outputElement, callback) {
 	});
     
     // set active section on focus of the form field
-    searchField.addEventListener("focus", addr.setActiveSection, false);
+    $('#q').focus(function(e) {
+        addr.setActiveSection();
+    });
+    // searchField.addEventListener("focus", addr.setActiveSection, false);
     
     // remove active section on blur of the form field
     searchField.addEventListener("blur", addr.removeActiveSection, false);
