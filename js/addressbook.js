@@ -1,26 +1,14 @@
 
 /* wrap everything in an anonymous function to contain the variables. This executes the address book*/
 
-(function() {
+$(document).ready(function() {
 	
 	/* define the DOM elements and common variables you'll need */
     var searchForm = $("#search-form"),
         searchField = $("#q"),
         getAllButton = $("#get-all"),
         target = $("#output");
-    
-    /* define address book methods */
-    var addr = {
-        
-        search : function(event){
-            
-            // stop the default behavior
-            event.preventDefault();
-            
-			/* set the output element */
-			var output = $("#output");
-			
-			/* start the Ajax call */
+    /* start the Ajax call */
             $.getJSON('data/contacts.json', function (data) {
 				
                 // save the input value, contacts length and i to variables
@@ -28,7 +16,12 @@
                     addrBook = data.addressBook,
                     count = addrBook.length,
                     i;
-                
+                            
+                // activate auto complete on keyUp
+                $('#q').keyup(function(event) {
+                    addr.search(event);
+                });
+                    
                 // clear the target area just incase there's something in it.
                 $('#output').empty();
                 
@@ -54,38 +47,7 @@
                 } // end count check
                 
             }); // end Ajax call
-            
-        },
-        setActiveSection : function(){
-        
-            // add a class of "active" the wrapping div
-            this.parentNode.setAttribute("class", "active");
-        
-        },
-        removeActiveSection : function(){
-        
-            // remove the class from the wrapping div
-            this.parentNode.removeAttribute("class");
-        
-        },
-        addHoverClass : function(){
-        
-            // remove the class from the wrapping div
-            searchForm.setAttribute("class", "hovering");
-        
-        },
-        removeHoverClass : function(){
-        
-            // remove the class from the wrapping div
-            searchForm.removeAttribute("class");
-        
-        }
     
     } // end addr object
-    
-    // activate auto complete on keyUp
-    $('#q').keyup(function(event) {
-		addr.search(event);
-	});
-    
+
 })(); // end anonymous function
