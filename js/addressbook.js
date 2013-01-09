@@ -6,7 +6,6 @@ $(document).ready(function() {
 	/* define the DOM elements and common variables you'll need */
     var searchForm = $("#search-form"),
         searchField = $("#q"),
-        getAllButton = $("#get-all"),
         target = $("#output");
     /* start the Ajax call */
             $.getJSON('data/contacts.json', function (data) {
@@ -16,14 +15,14 @@ $(document).ready(function() {
                     addrBook = data.addressBook,
                     count = addrBook.length,
                     i;
+                    
+                // clear the target area just incase there's something in it.
+                $('#output').empty();
                             
                 // activate auto complete on keyUp
                 $('#q').keyup(function(event) {
                     addr.search(event);
                 });
-                    
-                // clear the target area just incase there's something in it.
-                $('#output').empty();
                 
                 // check the count, of course
                 if(count > 0 && searchValue !== ""){
@@ -46,8 +45,6 @@ $(document).ready(function() {
     
                 } // end count check
                 
-            }); // end Ajax call
-    
-    } // end addr object
+            }); // end getJSON call
 
 })(); // end anonymous function
