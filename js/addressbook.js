@@ -1,32 +1,24 @@
-var addr = {
-        
-        search : function(event){
-            
-			/* set the output element */
-			var output = document.getElementById("output");
-            
-            // stop the default behavior
-            event.preventDefault();
-
-        } // end search method
-
-}; // end addr function
-
-/* ready the address book and execute the JSON data. */
-
+// Ready the document and get the JSON
 $(document).ready(function() {
-	
+
     /* start the Ajax call */
     $.getJSON('data/contacts.json', function (data) {
 
     // save the input value, contacts length and i to variables
-    var searchValue = searchField.value,
-        addrBook = data.addressBook,
+    var addrBook = data.addressBook,
         count = addrBook.length,
         i;
-                    
-    // clear the target area just incase there's something in it.
-    $('#output').empty();
+    });
+})
+
+(function () {
+
+    var addr = {
+        
+    search : function(event){
+            
+        // stop the default behavior
+        event.preventDefault();
 
         // check the count, of course
         if(count > 0 && searchValue !== ""){
@@ -49,21 +41,13 @@ $(document).ready(function() {
 
         } // end count check
 
-    }); // end getJSON call
+    } // end search function
     
-}); // end document.ready function
-
-
-
-
-
-
+    } // end addr function
     
-                            
-                // activate auto complete on keyUp
-                $('#q').keyup(function(event) {
-                    addr.search(event);
-                });
-                
+}) // end document.ready function
 
-                
+// activate auto complete on keyUp
+$('#q').keyup(function(event) {
+    addr.search(event);
+    })
