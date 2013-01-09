@@ -7,7 +7,18 @@ $(document).ready(function() {
     var searchForm = $("#search-form"),
         searchField = $("#q"),
         target = $("#output");
-    /* start the Ajax call */
+            
+    var addr = {
+        
+        search : function(event){
+            
+			/* set the output element */
+			var output = document.getElementById("output");
+            
+            // stop the default behavior
+            event.preventDefault();
+            
+            /* start the Ajax call */
             $.getJSON('data/contacts.json', function (data) {
 				
                 // save the input value, contacts length and i to variables
@@ -46,5 +57,9 @@ $(document).ready(function() {
                 } // end count check
                 
             }); // end getJSON call
+
+        } // end Search method
+
+    } // end addr function
 
 })(); // end anonymous function
