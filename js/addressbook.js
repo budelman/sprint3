@@ -15,14 +15,11 @@ $(document).ready(function() {
         
         search : function(event){
             
-            console.log("the search was accessed!");
-            
             // take the value of the search field and return it to all lowercase and then set it so we can check it later for content.
-            var searchValue = searchField.value.toLowerCase();
+            var searchValue = searchField.val().toLowerCase();
             
             // empty the output field before we dump things in!
             $('#output').empty();
-            console.log("We emptied the field!")
   
             // stop the default behavior
             event.preventDefault();
@@ -35,7 +32,7 @@ $(document).ready(function() {
                 
                     // look through the name value to see if it contains the searchterm string
                     var obj = addrBook[i],
-                        isItFound = obj.name..indexOf(searchValue);
+                        isItFound = obj.name.indexOf(searchValue);
     
                     // anything other than -1 means we found a match
                     if(isItFound !== -1) {
@@ -54,7 +51,6 @@ $(document).ready(function() {
     // activate auto complete on keyUp
     $('#q').keyup(function(event) {
         addr.search(event);
-        console.log("the key-up worked!!!");
     });
 
 }); // end json
