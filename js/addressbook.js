@@ -1,5 +1,7 @@
 // Ready the document and get the JSON
 $(document).ready(function() {
+    
+    var searchField = $('#q');
 
     /* start the Ajax call */
     $.getJSON('data/contacts.json', function (data) {
@@ -7,11 +9,8 @@ $(document).ready(function() {
     // save the input value, contacts length and i to variables
     var addrBook = data.addressBook,
         count = addrBook.length,
+        searchValue = searchField.value,
         i;
-    });
-})
-
-(function () {
 
     var addr = {
         
@@ -23,6 +22,8 @@ $(document).ready(function() {
         // check the count, of course
         if(count > 0 && searchValue !== ""){
         
+            $('#output').empty();
+            
             // loop through the contacts
             $.each(addrBook, function (i, obj) {
             
@@ -43,11 +44,13 @@ $(document).ready(function() {
 
     } // end search function
     
-    } // end addr function
-    
-}) // end document.ready function
+    }; // end addr object
+    }); // end json
 
 // activate auto complete on keyUp
 $('#q').keyup(function(event) {
     addr.search(event);
-    })
+    console.log("the key-up worked!!!");
+});
+
+}); // end document.ready function
